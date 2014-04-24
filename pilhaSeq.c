@@ -13,7 +13,7 @@ int cheiaPilha(tPilha *f) {
     return 0;
 }
 
-int pushPilha(tPilha *f, abstractPilhaContent valor) {
+int pushPilha(tPilha *f, abstractContent valor) {
     tPilhaItem *newVal = malloc(sizeof(tPilhaItem));
     newVal->content = valor;
     newVal->next=NULL;
@@ -25,11 +25,11 @@ int pushPilha(tPilha *f, abstractPilhaContent valor) {
     return 1;
 }
 
-abstractPilhaContent popPilha(tPilha *f) {
+abstractContent popPilha(tPilha *f) {
     if(vaziaPilha(f))
         return -1;
     tPilhaItem *aux = f->tail;
-    abstractPilhaContent retorno = aux->content;
+    abstractContent retorno = aux->content;
     f->tail=f->tail->previous;
     free(aux);
     return retorno;

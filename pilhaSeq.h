@@ -8,7 +8,7 @@
 
 
 typedef struct{
-    abstractPilhaContent content;
+    abstractContent content;
     void *next;
     void *previous;
 }tPilhaItem;
@@ -21,7 +21,7 @@ typedef struct{
 void inicializaPilha(tPilha *f);
 int vaziaPilha(tPilha *f);
 int cheiaPilha(tPilha *f);
-int pushPilha(tPilha *f, abstractPilhaContent valor);
-abstractPilhaContent popPilha(tPilha *f);
+int pushPilha(tPilha *f, abstractContent valor);
+abstractContent popPilha(tPilha *f);
 tPilhaItem* primeiroPilha(tPilha *f);
 int tamanhoPilha(tPilha * f);
