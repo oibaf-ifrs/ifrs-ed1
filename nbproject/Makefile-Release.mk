@@ -36,8 +36,8 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/filaEnc.o \
-	${OBJECTDIR}/newmain.o \
-	${OBJECTDIR}/pilhaSeq.o
+	${OBJECTDIR}/main.o \
+	${OBJECTDIR}/pilhaEnc.o
 
 
 # C Compiler Flags
@@ -69,15 +69,15 @@ ${OBJECTDIR}/filaEnc.o: filaEnc.c
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/filaEnc.o filaEnc.c
 
-${OBJECTDIR}/newmain.o: newmain.c 
+${OBJECTDIR}/main.o: main.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/newmain.o newmain.c
+	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.c
 
-${OBJECTDIR}/pilhaSeq.o: pilhaSeq.c 
+${OBJECTDIR}/pilhaEnc.o: pilhaEnc.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/pilhaSeq.o pilhaSeq.c
+	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/pilhaEnc.o pilhaEnc.c
 
 # Subprojects
 .build-subprojects:

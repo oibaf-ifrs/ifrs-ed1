@@ -1,46 +1,63 @@
+/* 
+ * File:   FilaEnc.c
+ * Author: Fábio Tramasoli (0619132)
+ * About: Fila Encadeada agnóstica a tipos.
+ * 
+ */
+
 #include <stdlib.h>
+#include <string.h>
 #include "filaEnc.h"
 
-void inicializaFila(tFila *f) {
-    f->head=f->tail=NULL;
+int inicializaFila(tFilaEnc *f) {
+    if(f!=NULL) {
+        f->head=f->tail=NULL;
+        return FILA_OPERACAO_OK;
+    }
+    return FILA_OPERACAO_ERR;
 }
 
-int vaziaFila(tFila *f) {
+int vaziaFila(tFilaEnc *f) {
     return (f->head==NULL);
 }
 
-int cheiaFila(tFila *f) {
+int cheiaFila(tFilaEnc *f) {
     return 0;
 }
 
-int inserirFila(tFila *f, abstractContent valor) {
+int inserirFila(tFilaEnc *f, void *valor, int bytes) {
     tFilaItem *newVal = malloc(sizeof(tFilaItem));
-    newVal->content = valor;
+    newVal->content = malloc(bytes);
+    memcpy(newVal->content, valor, bytes);
     newVal->next=NULL;
     if(vaziaFila(f))
         f->head=f->tail=newVal;
-    else
+    else 
         f->tail->next=f->tail=newVal;
-    return 1;
+    return FILA_OPERACAO_OK;
 }
 
-abstractContent removerFila(tFila *f) {
-    if(vaziaFila(f))
-        return -1;
+int removerFilaComValor(tFilaEnc *f, void *content, int bytes) {
+    memcpy(content,f->head->content, bytes);
+    return removerFila(f);
+}
+
+int removerFila(tFilaEnc *f) {
+    if (vaziaFila(f))
+        return FILA_VAZIA;
     tFilaItem *aux = f->head;
-    abstractContent retorno = aux->content;
     f->head=f->head->next;
     free(aux);
-    return retorno;
+    return FILA_OPERACAO_OK;
 }
 
-tFilaItem* primeiroFila(tFila *f) {
+tFilaItem* primeiroFila(tFilaEnc *f) {
     if (vaziaFila(f))
         return NULL;
     return ((tFilaItem*)f->head);
 }
 
-int tamanhoFila(tFila * f){
+int tamanhoFila(tFilaEnc * f){
     if(vaziaFila(f))
         return 0;
     unsigned int retorno=0;
@@ -49,4 +66,3 @@ int tamanhoFila(tFila * f){
         retorno++;
     return retorno;
 }
-

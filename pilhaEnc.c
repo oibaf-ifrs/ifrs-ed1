@@ -1,8 +1,20 @@
+/* 
+ * File:   pilhaEnc.h
+ * Author: Fábio Tramasoli (0619132)
+ * About: Pilha Encadeada agnóstica a tipos.
+ * 
+ */
+
 #include <stdlib.h>
-#include "pilhaSeq.h"
+#include <string.h>
+#include "pilhaEnc.h"
 
 void inicializaPilha(tPilha *f) {
-    f->head=f->tail=NULL;
+    if(f!=NULL) {
+        f->head=f->tail=NULL;
+        return PILHA_OPERACAO_OK;
+    }
+    return PILHA_OPERACAO_ERR;
 }
 
 int vaziaPilha(tPilha *f) {
@@ -13,26 +25,27 @@ int cheiaPilha(tPilha *f) {
     return 0;
 }
 
-int pushPilha(tPilha *f, abstractContent valor) {
+int pushPilha(tPilha *f, void* content, int bytes) {
     tPilhaItem *newVal = malloc(sizeof(tPilhaItem));
-    newVal->content = valor;
+    newVal->content = malloc(bytes);
+    memcpy(newVal->content,content,bytes);
     newVal->next=NULL;
     newVal->previous=f->tail;
     if(vaziaPilha(f))
         f->head=f->tail=newVal;
     else
         f->tail->next=f->tail=newVal;
-    return 1;
+    return PILHA_OPERACAO_OK;
 }
 
-abstractContent popPilha(tPilha *f) {
+int popPilha(tPilha *f, void* content, int bytes) {
     if(vaziaPilha(f))
-        return -1;
+        return PILHA_VAZIA;
     tPilhaItem *aux = f->tail;
-    abstractContent retorno = aux->content;
+    memcpy(content,aux->content,bytes);
     f->tail=f->tail->previous;
     free(aux);
-    return retorno;
+    return PILHA_OPERACAO_OK;
 }
 
 tPilhaItem* primeiroPilha(tPilha *f) {
@@ -43,12 +56,10 @@ tPilhaItem* primeiroPilha(tPilha *f) {
 
 int tamanhoPilha(tPilha * f){
     if(vaziaPilha(f))
-        return 0;
+        return PILHA_VAZIA;
     unsigned int retorno=0;
     tPilhaItem *go;
     for(go=f->head;go!=NULL;go=go->next)
         retorno++;
     return retorno;
 }
-
-

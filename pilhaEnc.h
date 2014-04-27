@@ -1,14 +1,17 @@
 /* 
- * File:   FilaSeq.h
- * Author: FABIO
- *
- * Created on 4 de Junho de 2013, 10:22
+ * File:   pilhaEnc.h
+ * Author: Fábio Tramasoli (0619132)
+ * About: Pilha Encadeada agnóstica a tipos.
+ * 
  */
-#include "tipos.h"
 
+#define PILHA_VAZIA -1
+#define PILHA_CHEIA 10
+#define PILHA_OPERACAO_OK 0
+#define PILHA_OPERACAO_ERR 1
 
 typedef struct{
-    abstractContent content;
+    void *content;
     void *next;
     void *previous;
 }tPilhaItem;
@@ -21,7 +24,7 @@ typedef struct{
 void inicializaPilha(tPilha *f);
 int vaziaPilha(tPilha *f);
 int cheiaPilha(tPilha *f);
-int pushPilha(tPilha *f, abstractContent valor);
-abstractContent popPilha(tPilha *f);
+int pushPilha(tPilha *f, void*, int);
+int popPilha(tPilha *f, void*, int);
 tPilhaItem* primeiroPilha(tPilha *f);
 int tamanhoPilha(tPilha * f);

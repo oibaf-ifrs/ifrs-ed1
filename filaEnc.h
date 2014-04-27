@@ -1,27 +1,31 @@
 /* 
- * File:   FilaSeq.h
- * Author: FABIO
- *
- * Created on 4 de Junho de 2013, 10:22
+ * File:   FilaEnc.h
+ * Author: Fábio Tramasoli (0619132)
+ * About: Fila Encadeada agnóstica a tipos.
+ * 
  */
 
-#include "tipos.h"
-
+#define FILA_VAZIA -1
+#define FILA_CHEIA 10
+#define FILA_OPERACAO_OK 0
+#define FILA_OPERACAO_ERR 1
 
 typedef struct{
-    abstractContent content;
+    void *content;
     void *next;
+    void *previous;
 }tFilaItem;
 
 typedef struct{
     tFilaItem *head;
     tFilaItem *tail;
-}tFila;
+}tFilaEnc;
 
-void inicializaFila(tFila *f);
-int vaziaFila(tFila *f);
-int cheiaFila(tFila *f);
-int inserirFila(tFila *f, abstractContent valor);
-abstractContent removerFila(tFila *f);
-tFilaItem* primeiroFila(tFila *f);
-int tamanhoFila(tFila * f);
+int inicializaFila(tFilaEnc *);
+int vaziaFila(tFilaEnc *);
+int cheiaFila(tFilaEnc *);
+int inserirFila(tFilaEnc *, void *, int);
+int removerFilaComValor(tFilaEnc *,void*,int);
+int removerFila(tFilaEnc *);
+tFilaItem* primeiroFila(tFilaEnc *);
+int tamanhoFila(tFilaEnc *);

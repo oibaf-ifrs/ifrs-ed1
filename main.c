@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "filaEnc.h"
-#include "pilhaSeq.h"
+#include "pilhaEnc.h"
 
 /*
  * 
@@ -34,35 +34,31 @@ int main(int argc, char** argv) {
     float cpfArray[] = {0,0,7,6,3,4,5,5,0,5,9}, soma1, soma2, soma, multiplicacao;
     tPilha *ps = malloc(sizeof(tPilha));
     inicializaPilha(ps);
-    tFila *fe = malloc(sizeof(tFila));
+    tFilaEnc *fe = malloc(sizeof(tFilaEnc));
     inicializaFila(fe);
     //Item A
     int count=0;
     for (count=0;count<11; count++) {
         printf("%f\n",cpfArray[count]);
-        pushPilha(ps,cpfArray[count]);
+        pushPilha(ps,cpfArray+count,sizeof(cpfArray+count));
     }
     //Fim item A
     printf("\n\n\n");
     //Item B
-    float aux=0;
-    while (aux!=-1) {
+    while (!vaziaPilha(ps)) {
         soma=0;
-        soma1=popPilha(ps);
-        if(soma1!=-1) {
+        if(popPilha(ps,&soma1,sizeof(soma1))!=PILHA_VAZIA) {
             soma+=soma1;
-            soma2=popPilha(ps);
-            if(soma2!=-1)
+            if(popPilha(ps,&soma2,sizeof(soma2))!=PILHA_VAZIA);
                 soma+=soma2;
             printf("Soma: %f\n",soma);
-            inserirFila(fe,soma);
-        } else
-            aux=-1;
+            inserirFila(fe,&soma,sizeof(soma));
+        }
     }
     //Fim item B
     printf("\n\n\n");
     //Item C
-    aux=0;
+    float aux=0;
     multiplicacao=1;
     while(aux!=-1) {
         aux=removerFila(fe);
