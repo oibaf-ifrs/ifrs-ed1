@@ -47,6 +47,7 @@ int removerFila(tFilaEnc *f) {
         return FILA_VAZIA;
     tFilaItem *aux = f->head;
     f->head=f->head->next;
+    free(aux->content);
     free(aux);
     return FILA_OPERACAO_OK;
 }

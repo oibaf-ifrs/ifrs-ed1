@@ -21,7 +21,7 @@ typedef struct{
     tPilhaItem *tail;
 }tPilha;
 
-void inicializaPilha(tPilha *f);
+int inicializaPilha(tPilha *f);
 int vaziaPilha(tPilha *f);
 int cheiaPilha(tPilha *f);
 int pushPilha(tPilha *f, void*, int);

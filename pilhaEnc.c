@@ -9,7 +9,7 @@
 #include <string.h>
 #include "pilhaEnc.h"
 
-void inicializaPilha(tPilha *f) {
+int inicializaPilha(tPilha *f) {
     if(f!=NULL) {
         f->head=f->tail=NULL;
         return PILHA_OPERACAO_OK;
@@ -44,6 +44,7 @@ int popPilha(tPilha *f, void* content, int bytes) {
     tPilhaItem *aux = f->tail;
     memcpy(content,aux->content,bytes);
     f->tail=f->tail->previous;
+    free(aux->content);
     free(aux);
     return PILHA_OPERACAO_OK;
 }
