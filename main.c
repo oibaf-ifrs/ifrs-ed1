@@ -32,24 +32,24 @@ Passo C: multiplicando teremos: 1*17*13*9*5*1=9945
  */
 int main(int argc, char** argv) {
     float cpfArray[] = {0,0,7,6,3,4,5,5,0,5,9}, soma1, soma2, soma, multiplicacao;
-    tPilha *ps = malloc(sizeof(tPilha));
-    inicializaPilha(ps);
+    tPilhaEnc *ps = malloc(sizeof(tPilhaEnc));
+    inicializaPilhaEnc(ps);
     tFilaEnc *fe = malloc(sizeof(tFilaEnc));
     inicializaFila(fe);
     //Item A
     int count=0;
     for (count=0;count<11; count++) {
         printf("%f\n",cpfArray[count]);
-        pushPilha(ps,cpfArray+count,sizeof(cpfArray+count));
+        pushPilhaEnc(ps,cpfArray+count,sizeof(cpfArray+count));
     }
     //Fim item A
     printf("\n\n\n");
     //Item B
-    while (!vaziaPilha(ps)) {
+    while (!vaziaPilhaEnc(ps)) {
         soma=0;
-        if(popPilha(ps,&soma1,sizeof(soma1))!=PILHA_VAZIA) {
+        if(popPilhaEnc(ps,&soma1,sizeof(soma1))!=PILHAENC_VAZIA) {
             soma+=soma1;
-            if(popPilha(ps,&soma2,sizeof(soma2))!=PILHA_VAZIA);
+            if(popPilhaEnc(ps,&soma2,sizeof(soma2))!=PILHAENC_VAZIA);
                 soma+=soma2;
             printf("Soma: %f\n",soma);
             inserirFila(fe,&soma,sizeof(soma));

@@ -5,26 +5,26 @@
  * 
  */
 
-#define PILHA_VAZIA -1
-#define PILHA_CHEIA 10
-#define PILHA_OPERACAO_OK 0
-#define PILHA_OPERACAO_ERR 1
+#define PILHAENC_VAZIA -1
+#define PILHAENC_CHEIA 10
+#define PILHAENC_OPERACAO_OK 0
+#define PILHAENC_OPERACAO_ERR 1
 
 typedef struct{
     void *content;
     void *next;
     void *previous;
-}tPilhaItem;
+}tPilhaEncItem;
 
 typedef struct{
-    tPilhaItem *head;
-    tPilhaItem *tail;
-}tPilha;
+    tPilhaEncItem *head;
+    tPilhaEncItem *tail;
+}tPilhaEnc;
 
-int inicializaPilha(tPilha *f);
-int vaziaPilha(tPilha *f);
-int cheiaPilha(tPilha *f);
-int pushPilha(tPilha *f, void*, int);
-int popPilha(tPilha *f, void*, int);
-tPilhaItem* primeiroPilha(tPilha *f);
-int tamanhoPilha(tPilha * f);
+int inicializaPilhaEnc(tPilhaEnc *f);
+int vaziaPilhaEnc(tPilhaEnc *f);
+int cheiaPilhaEnc(tPilhaEnc *f);
+int pushPilhaEnc(tPilhaEnc *f, void*, int);
+int popPilhaEnc(tPilhaEnc *f, void*, int);
+tPilhaEncItem* primeiroPilhaEnc(tPilhaEnc *f);
+int tamanhoPilhaEnc(tPilhaEnc * f);

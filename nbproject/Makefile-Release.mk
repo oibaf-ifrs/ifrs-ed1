@@ -37,7 +37,8 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 OBJECTFILES= \
 	${OBJECTDIR}/filaEnc.o \
 	${OBJECTDIR}/main.o \
-	${OBJECTDIR}/pilhaEnc.o
+	${OBJECTDIR}/pilhaEnc.o \
+	${OBJECTDIR}/pilhaSeq.o
 
 
 # C Compiler Flags
@@ -78,6 +79,11 @@ ${OBJECTDIR}/pilhaEnc.o: pilhaEnc.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/pilhaEnc.o pilhaEnc.c
+
+${OBJECTDIR}/pilhaSeq.o: pilhaSeq.c 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/pilhaSeq.o pilhaSeq.c
 
 # Subprojects
 .build-subprojects:

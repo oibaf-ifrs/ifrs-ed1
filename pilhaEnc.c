@@ -9,57 +9,57 @@
 #include <string.h>
 #include "pilhaEnc.h"
 
-int inicializaPilha(tPilha *f) {
+int inicializaPilhaEnc(tPilhaEnc *f) {
     if(f!=NULL) {
         f->head=f->tail=NULL;
-        return PILHA_OPERACAO_OK;
+        return PILHAENC_OPERACAO_OK;
     }
-    return PILHA_OPERACAO_ERR;
+    return PILHAENC_OPERACAO_ERR;
 }
 
-int vaziaPilha(tPilha *f) {
+int vaziaPilhaEnc(tPilhaEnc *f) {
     return (f->tail==NULL);
 }
 
-int cheiaPilha(tPilha *f) {
+int cheiaPilhaEnc(tPilhaEnc *f) {
     return 0;
 }
 
-int pushPilha(tPilha *f, void* content, int bytes) {
-    tPilhaItem *newVal = malloc(sizeof(tPilhaItem));
+int pushPilhaEnc(tPilhaEnc *f, void* content, int bytes) {
+    tPilhaEncItem *newVal = malloc(sizeof(tPilhaEncItem));
     newVal->content = malloc(bytes);
     memcpy(newVal->content,content,bytes);
     newVal->next=NULL;
     newVal->previous=f->tail;
-    if(vaziaPilha(f))
+    if(vaziaPilhaEnc(f))
         f->head=f->tail=newVal;
     else
         f->tail->next=f->tail=newVal;
-    return PILHA_OPERACAO_OK;
+    return PILHAENC_OPERACAO_OK;
 }
 
-int popPilha(tPilha *f, void* content, int bytes) {
-    if(vaziaPilha(f))
-        return PILHA_VAZIA;
-    tPilhaItem *aux = f->tail;
+int popPilhaEnc(tPilhaEnc *f, void* content, int bytes) {
+    if(vaziaPilhaEnc(f))
+        return PILHAENC_VAZIA;
+    tPilhaEncItem *aux = f->tail;
     memcpy(content,aux->content,bytes);
     f->tail=f->tail->previous;
     free(aux->content);
     free(aux);
-    return PILHA_OPERACAO_OK;
+    return PILHAENC_OPERACAO_OK;
 }
 
-tPilhaItem* primeiroPilha(tPilha *f) {
-    if (vaziaPilha(f))
+tPilhaEncItem* primeiroPilhaEnc(tPilhaEnc *f) {
+    if (vaziaPilhaEnc(f))
         return NULL;
-    return ((tPilhaItem*)f->head);
+    return ((tPilhaEncItem*)f->head);
 }
 
-int tamanhoPilha(tPilha * f){
-    if(vaziaPilha(f))
-        return PILHA_VAZIA;
+int tamanhoPilhaEnc(tPilhaEnc * f){
+    if(vaziaPilhaEnc(f))
+        return PILHAENC_VAZIA;
     unsigned int retorno=0;
-    tPilhaItem *go;
+    tPilhaEncItem *go;
     for(go=f->head;go!=NULL;go=go->next)
         retorno++;
     return retorno;
