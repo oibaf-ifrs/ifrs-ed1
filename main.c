@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include "filaEnc.h"
 #include "pilhaEnc.h"
+#include "pilhaSeq.h"
 
 /*
  * 
@@ -32,24 +33,24 @@ Passo C: multiplicando teremos: 1*17*13*9*5*1=9945
  */
 int main(int argc, char** argv) {
     float cpfArray[] = {0,0,7,6,3,4,5,5,0,5,9}, soma1, soma2, soma, multiplicacao;
-    tPilhaEnc *ps = malloc(sizeof(tPilhaEnc));
-    inicializaPilhaEnc(ps);
+    tPilhaSeq *ps = malloc(sizeof(tPilhaSeq));
+    inicializaPilhaSeq(ps,sizeof(float));
     tFilaEnc *fe = malloc(sizeof(tFilaEnc));
     inicializaFila(fe);
     //Item A
     int count=0;
     for (count=0;count<11; count++) {
         printf("%f\n",cpfArray[count]);
-        pushPilhaEnc(ps,cpfArray+count,sizeof(cpfArray+count));
+        pushPilhaSeq(ps,cpfArray+count);
     }
     //Fim item A
     printf("\n\n\n");
     //Item B
-    while (!vaziaPilhaEnc(ps)) {
+    while (vaziaPilhaSeq(ps)!=PILHASEQ_VAZIA) {
         soma=0;
-        if(popPilhaEnc(ps,&soma1,sizeof(soma1))!=PILHAENC_VAZIA) {
+        if(popPilhaSeq(ps,&soma1)!=PILHASEQ_OPERACAO_ERR) {
             soma+=soma1;
-            if(popPilhaEnc(ps,&soma2,sizeof(soma2))!=PILHAENC_VAZIA);
+            if(popPilhaSeq(ps,&soma2)!=PILHASEQ_OPERACAO_ERR);
                 soma+=soma2;
             printf("Soma: %f\n",soma);
             inserirFila(fe,&soma,sizeof(soma));
@@ -68,6 +69,7 @@ int main(int argc, char** argv) {
     printf("Multiplicacao: %f\n",multiplicacao);
     //Fim item C
     //Limpezas
+    free(ps->conteudo);
     free(ps);
     free(fe);
     return (EXIT_SUCCESS);

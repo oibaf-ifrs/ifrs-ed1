@@ -14,12 +14,13 @@
 typedef struct{
     char **conteudo;
     int topo;
+    int bytes;
 }tPilhaSeq;
 
-int inicializaPilhaSeq(tPilhaSeq *);
+int inicializaPilhaSeq(tPilhaSeq *, int bytes);
 int vaziaPilhaSeq (tPilhaSeq *);
 int cheiaPilhaSeq (tPilhaSeq *);
-int pushPilhaSeq(tPilhaSeq *, void *, int);
-int popPilhaSeq (tPilhaSeq *, void *, int);
-int primeiroPilhaSeq (tPilhaSeq *, void *, int);
+int pushPilhaSeq(tPilhaSeq *, void *);
+int popPilhaSeq (tPilhaSeq *, void *);
+int primeiroPilhaSeq (tPilhaSeq *, void *);
 int tamanhoPilhaSeq(tPilhaSeq *);
