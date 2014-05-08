@@ -14,6 +14,11 @@ int inicializaPilhaSeq(tPilhaSeq *pilha, int bytes){
         pilha->conteudo = malloc(sizeof(char)*PILHASEQ_TAMANHO*pilha->bytes);
 }
 
+int finalizaPilhaSeq(tPilhaSeq *pilha) {
+    free(pilha->conteudo);
+    return PILHASEQ_OPERACAO_OK;
+}
+
 int vaziaPilhaSeq (tPilhaSeq *pilha){
     if ((pilha->topo)==-1)
         return PILHASEQ_VAZIA;

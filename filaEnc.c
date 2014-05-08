@@ -9,60 +9,64 @@
 #include <string.h>
 #include "filaEnc.h"
 
-int inicializaFila(tFilaEnc *f) {
+int inicializaFilaEnc(tFilaEnc *f) {
     if(f!=NULL) {
         f->head=f->tail=NULL;
-        return FILA_OPERACAO_OK;
+        return FILASEQ_OPERACAO_OK;
     }
-    return FILA_OPERACAO_ERR;
+    return FILASEQ_OPERACAO_ERR;
 }
 
-int vaziaFila(tFilaEnc *f) {
+int finalizaFilaEnc(tFilaEnc *f) {
+    return FILASEQ_OPERACAO_OK;
+}
+
+int vaziaFilaEnc(tFilaEnc *f) {
     return (f->head==NULL);
 }
 
-int cheiaFila(tFilaEnc *f) {
+int cheiaFilaEnc(tFilaEnc *f) {
     return 0;
 }
 
-int inserirFila(tFilaEnc *f, void *valor, int bytes) {
-    tFilaItem *newVal = malloc(sizeof(tFilaItem));
+int inserirFilaEnc(tFilaEnc *f, void *valor, int bytes) {
+    tFilaIEnctem *newVal = malloc(sizeof(tFilaIEnctem));
     newVal->content = malloc(bytes);
     memcpy(newVal->content, valor, bytes);
     newVal->next=NULL;
-    if(vaziaFila(f))
+    if(vaziaFilaEnc(f))
         f->head=f->tail=newVal;
     else 
         f->tail->next=f->tail=newVal;
-    return FILA_OPERACAO_OK;
+    return FILASEQ_OPERACAO_OK;
 }
 
-int removerFilaComValor(tFilaEnc *f, void *content, int bytes) {
+int removerFilaEncComValor(tFilaEnc *f, void *content, int bytes) {
     memcpy(content,f->head->content, bytes);
-    return removerFila(f);
+    return removerFilaEnc(f);
 }
 
-int removerFila(tFilaEnc *f) {
-    if (vaziaFila(f))
-        return FILA_VAZIA;
-    tFilaItem *aux = f->head;
+int removerFilaEnc(tFilaEnc *f) {
+    if (vaziaFilaEnc(f))
+        return FILASEQ_VAZIA;
+    tFilaIEnctem *aux = f->head;
     f->head=f->head->next;
     free(aux->content);
     free(aux);
-    return FILA_OPERACAO_OK;
+    return FILASEQ_OPERACAO_OK;
 }
 
-tFilaItem* primeiroFila(tFilaEnc *f) {
-    if (vaziaFila(f))
+tFilaIEnctem* primeiroFilaEnc(tFilaEnc *f) {
+    if (vaziaFilaEnc(f))
         return NULL;
-    return ((tFilaItem*)f->head);
+    return ((tFilaIEnctem*)f->head);
 }
 
-int tamanhoFila(tFilaEnc * f){
-    if(vaziaFila(f))
+int tamanhoFilaEnc(tFilaEnc * f){
+    if(vaziaFilaEnc(f))
         return 0;
     unsigned int retorno=0;
-    tFilaItem *go;
+    tFilaIEnctem *go;
     for(go=f->head;go!=NULL;go=go->next)
         retorno++;
     return retorno;

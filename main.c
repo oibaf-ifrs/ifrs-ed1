@@ -36,7 +36,7 @@ int main(int argc, char** argv) {
     tPilhaSeq *ps = malloc(sizeof(tPilhaSeq));
     inicializaPilhaSeq(ps,sizeof(float));
     tFilaEnc *fe = malloc(sizeof(tFilaEnc));
-    inicializaFila(fe);
+    inicializaFilaEnc(fe);
     //Item A
     int count=0;
     for (count=0;count<11; count++) {
@@ -53,7 +53,7 @@ int main(int argc, char** argv) {
             if(popPilhaSeq(ps,&soma2)!=PILHASEQ_OPERACAO_ERR);
                 soma+=soma2;
             printf("Soma: %f\n",soma);
-            inserirFila(fe,&soma,sizeof(soma));
+            inserirFilaEnc(fe,&soma,sizeof(soma));
         }
     }
     //Fim item B
@@ -62,14 +62,14 @@ int main(int argc, char** argv) {
     float aux=0;
     multiplicacao=1;
     while(aux!=-1) {
-        aux=removerFila(fe);
+        aux=removerFilaEnc(fe);
         if(aux!=-1)
             multiplicacao*=aux;
     }
     printf("Multiplicacao: %f\n",multiplicacao);
     //Fim item C
     //Limpezas
-    free(ps->conteudo);
+    finalizaPilhaSeq(ps);
     free(ps);
     free(fe);
     return (EXIT_SUCCESS);

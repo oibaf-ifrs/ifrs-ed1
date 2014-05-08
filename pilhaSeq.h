@@ -18,6 +18,7 @@ typedef struct{
 }tPilhaSeq;
 
 int inicializaPilhaSeq(tPilhaSeq *, int bytes);
+int finalizaPilhaSeq(tPilhaSeq *);
 int vaziaPilhaSeq (tPilhaSeq *);
 int cheiaPilhaSeq (tPilhaSeq *);
 int pushPilhaSeq(tPilhaSeq *, void *);
