@@ -19,12 +19,14 @@ typedef struct{
 typedef struct{
     tPilhaEncItem *head;
     tPilhaEncItem *tail;
+    int bytes;
 }tPilhaEnc;
 
-int inicializaPilhaEnc(tPilhaEnc *f);
+int inicializaPilhaEnc(tPilhaEnc *f,int);
 int vaziaPilhaEnc(tPilhaEnc *f);
 int cheiaPilhaEnc(tPilhaEnc *f);
-int pushPilhaEnc(tPilhaEnc *f, void*, int);
-int popPilhaEnc(tPilhaEnc *f, void*, int);
+int pushPilhaEnc(tPilhaEnc *f, void*);
+int popPilhaEnc(tPilhaEnc *f, void*);
 tPilhaEncItem* primeiroPilhaEnc(tPilhaEnc *f);
 int tamanhoPilhaEnc(tPilhaEnc * f);
+int finalizaPilhaEnc(tPilhaEnc * f);

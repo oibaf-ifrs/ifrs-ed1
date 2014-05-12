@@ -9,51 +9,62 @@
 #include <string.h>
 #include "filaEnc.h"
 
-int inicializaFilaEnc(tFilaEnc *f) {
+int inicializaFilaEnc(tFilaEnc *f, int bytes) {
     if(f!=NULL) {
         f->head=f->tail=NULL;
-        return FILASEQ_OPERACAO_OK;
+        f->bytes=bytes;
+        return FILAENC_OPERACAO_OK;
     }
-    return FILASEQ_OPERACAO_ERR;
+    return FILAENC_OPERACAO_ERR;
 }
 
 int finalizaFilaEnc(tFilaEnc *f) {
-    return FILASEQ_OPERACAO_OK;
+    char *aux = malloc(f->bytes);
+    while(removerFilaEnc(f,aux)==FILAENC_OPERACAO_OK) {
+    }
+    free(aux);
+    return FILAENC_OPERACAO_OK;
 }
 
 int vaziaFilaEnc(tFilaEnc *f) {
-    return (f->head==NULL);
+    if (f->head==NULL)
+        return FILAENC_VAZIA;
+    else
+        return FILAENC_OPERACAO_OK;
 }
 
 int cheiaFilaEnc(tFilaEnc *f) {
-    return 0;
+    return FILAENC_OPERACAO_OK;
 }
 
-int inserirFilaEnc(tFilaEnc *f, void *valor, int bytes) {
+int inserirFilaEnc(tFilaEnc *f, void *valor) {
     tFilaIEnctem *newVal = malloc(sizeof(tFilaIEnctem));
-    newVal->content = malloc(bytes);
-    memcpy(newVal->content, valor, bytes);
+    newVal->content = malloc(f->bytes);
+    memcpy(newVal->content, valor, f->bytes);
     newVal->next=NULL;
     if(vaziaFilaEnc(f))
         f->head=f->tail=newVal;
     else 
         f->tail->next=f->tail=newVal;
-    return FILASEQ_OPERACAO_OK;
+    return FILAENC_OPERACAO_OK;
 }
 
-int removerFilaEncComValor(tFilaEnc *f, void *content, int bytes) {
-    memcpy(content,f->head->content, bytes);
-    return removerFilaEnc(f);
+int removerFilaEnc(tFilaEnc *f, void *content) {
+    if (vaziaFilaEnc(f)==FILAENC_VAZIA)
+        return FILAENC_VAZIA;
+    else
+        memcpy(content,f->head->content, f->bytes);
+    return removerFilaEncSemValor(f);
 }
 
-int removerFilaEnc(tFilaEnc *f) {
-    if (vaziaFilaEnc(f))
-        return FILASEQ_VAZIA;
+int removerFilaEncSemValor(tFilaEnc *f) {
+    if (vaziaFilaEnc(f)==FILAENC_VAZIA)
+        return FILAENC_VAZIA;
     tFilaIEnctem *aux = f->head;
     f->head=f->head->next;
     free(aux->content);
     free(aux);
-    return FILASEQ_OPERACAO_OK;
+    return FILAENC_OPERACAO_OK;
 }
 
 tFilaIEnctem* primeiroFilaEnc(tFilaEnc *f) {

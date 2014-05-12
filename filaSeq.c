@@ -21,16 +21,22 @@ int finalizaFilaSeq(tFilaSeq *f) {
 }
 
 int vaziaFilaSeq(tFilaSeq *f) {
-    return f->inicio == -1;
+    if (f->inicio == -1)
+        return FILASEQ_VAZIA;
+    else
+        return FILASEQ_OPERACAO_OK;
 }
 
 int cheiaFilaSeq(tFilaSeq *f) {
-    return (((f->fim) + 1) % FILASEQ_TAMANHO) == (f->inicio);
+    if ( (((f->fim) + 1) % FILASEQ_TAMANHO) == (f->inicio) )
+        return FILASEQ_CHEIA;
+    else
+        return FILASEQ_OPERACAO_OK;
 }
 
 int inserirFilaSeq(tFilaSeq *f, void *valor) {
-    if (!cheiaFilaSeq(f)) {
-        if (vaziaFilaSeq(f))f->inicio = 0;
+    if (cheiaFilaSeq(f)!=FILASEQ_CHEIA) {
+        if (vaziaFilaSeq(f)==FILASEQ_VAZIA)f->inicio = 0;
         (f->fim)++;
         f->fim = (f->fim) % FILASEQ_TAMANHO;
         memcpy((f->conteudo+(f->fim*f->bytes)),valor,f->bytes);
@@ -39,11 +45,11 @@ int inserirFilaSeq(tFilaSeq *f, void *valor) {
 }
 
 int removerFilaSeq(tFilaSeq *f, void *valor) {
-    if (!vaziaFilaSeq(f)) {
+    if (vaziaFilaSeq(f)!=FILASEQ_VAZIA) {
         memcpy(valor,(f->conteudo+(f->inicio*f->bytes)),f->bytes);
-        if (f->fim == f->inicio) {//condicao de 1 elemento
+        if (f->fim == f->inicio) {
             inicializaFilaSeq(f,f->bytes);
-        } else {//condicao >1 elemento
+        } else {
             (f->inicio)++;
         }
         return FILASEQ_OPERACAO_OK;
@@ -53,7 +59,7 @@ int removerFilaSeq(tFilaSeq *f, void *valor) {
 }
 
 int topoFilaSeq(tFilaSeq *f, void *valor) {
-    if (!vaziaFilaSeq(f)) {
+    if (vaziaFilaSeq(f)!=FILASEQ_VAZIA) {
         memcpy(valor,(f->conteudo+(f->inicio*f->bytes)),f->bytes);
         return FILASEQ_OPERACAO_OK;
     } else {
@@ -64,7 +70,7 @@ int topoFilaSeq(tFilaSeq *f, void *valor) {
 int tamanhoFilaSeq(tFilaSeq * f){
     int cont=0;
     int aux=f->inicio;
-    if(vaziaFilaSeq(f))return 0;
+    if(vaziaFilaSeq(f)==FILASEQ_VAZIA)return 0;
     while(aux!=f->fim){
         cont++;
         aux=(aux+1)%FILASEQ_TAMANHO;

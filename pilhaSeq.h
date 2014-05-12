@@ -12,7 +12,7 @@
 #define PILHASEQ_TAMANHO 10
 
 typedef struct{
-    char **conteudo;
+    char *conteudo;
     int topo;
     int bytes;
 }tPilhaSeq;

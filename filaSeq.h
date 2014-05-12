@@ -15,7 +15,7 @@ typedef struct{
     int inicio;
     int fim;
     int bytes;
-    char **conteudo;
+    char *conteudo;
 }tFilaSeq;
 
 void inicializaFilaSeq(tFilaSeq *f, int bytes);

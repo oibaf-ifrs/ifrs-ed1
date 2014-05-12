@@ -5,10 +5,10 @@
  * 
  */
 
-#define FILASEQ_VAZIA -1
-#define FILASEQ_CHEIA 10
-#define FILASEQ_OPERACAO_OK 0
-#define FILASEQ_OPERACAO_ERR 1
+#define FILAENC_VAZIA -1
+#define FILAENC_CHEIA 10
+#define FILAENC_OPERACAO_OK 0
+#define FILAENC_OPERACAO_ERR 1
 
 typedef struct{
     void *content;
@@ -19,14 +19,15 @@ typedef struct{
 typedef struct{
     tFilaIEnctem *head;
     tFilaIEnctem *tail;
+    int bytes;
 }tFilaEnc;
 
-int inicializaFilaEnc(tFilaEnc *);
+int inicializaFilaEnc(tFilaEnc *,int);
 int finalizaFilaEnc(tFilaEnc *);
 int vaziaFilaEnc(tFilaEnc *);
 int cheiaFilaEnc(tFilaEnc *);
-int inserirFilaEnc(tFilaEnc *, void *, int);
-int removerFilaEncComValor(tFilaEnc *,void*,int);
-int removerFilaEnc(tFilaEnc *);
+int inserirFilaEnc(tFilaEnc *, void *);
+int removerFilaEnc(tFilaEnc *,void*);
+int removerFilaEncSemValor(tFilaEnc *);
 tFilaIEnctem* primeiroFilaEnc(tFilaEnc *);
 int tamanhoFilaEnc(tFilaEnc *);

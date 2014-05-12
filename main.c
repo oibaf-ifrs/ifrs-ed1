@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "filaEnc.h"
+#include "filaSeq.h"
 #include "pilhaEnc.h"
 #include "pilhaSeq.h"
 
@@ -33,43 +34,38 @@ Passo C: multiplicando teremos: 1*17*13*9*5*1=9945
  */
 int main(int argc, char** argv) {
     float cpfArray[] = {0,0,7,6,3,4,5,5,0,5,9}, soma1, soma2, soma, multiplicacao;
-    tPilhaSeq *ps = malloc(sizeof(tPilhaSeq));
-    inicializaPilhaSeq(ps,sizeof(float));
+    tPilhaEnc *ps = malloc(sizeof(tPilhaEnc));
+    inicializaPilhaEnc(ps,sizeof(float));
     tFilaEnc *fe = malloc(sizeof(tFilaEnc));
-    inicializaFilaEnc(fe);
+    inicializaFilaEnc(fe,sizeof(float));
     //Item A
     int count=0;
     for (count=0;count<11; count++) {
         printf("%f\n",cpfArray[count]);
-        pushPilhaSeq(ps,cpfArray+count);
+        pushPilhaEnc(ps,cpfArray+count);
     }
     //Fim item A
     printf("\n\n\n");
     //Item B
-    while (vaziaPilhaSeq(ps)!=PILHASEQ_VAZIA) {
-        soma=0;
-        if(popPilhaSeq(ps,&soma1)!=PILHASEQ_OPERACAO_ERR) {
-            soma+=soma1;
-            if(popPilhaSeq(ps,&soma2)!=PILHASEQ_OPERACAO_ERR);
-                soma+=soma2;
-            printf("Soma: %f\n",soma);
-            inserirFilaEnc(fe,&soma,sizeof(soma));
-        }
+    while (popPilhaEnc(ps,&soma1)!=PILHAENC_VAZIA) {
+        soma=soma1;
+        if(popPilhaEnc(ps,&soma2)!=PILHAENC_VAZIA);
+            soma+=soma2;
+        printf("Soma: %f\n",soma);
+        inserirFilaEnc(fe,&soma);
     }
     //Fim item B
     printf("\n\n\n");
     //Item C
     float aux=0;
     multiplicacao=1;
-    while(aux!=-1) {
-        aux=removerFilaEnc(fe);
-        if(aux!=-1)
-            multiplicacao*=aux;
+    while(removerFilaEnc(fe,&aux)==FILAENC_OPERACAO_OK) {
+        multiplicacao*=aux;
     }
     printf("Multiplicacao: %f\n",multiplicacao);
     //Fim item C
     //Limpezas
-    finalizaPilhaSeq(ps);
+    finalizaPilhaEnc(ps);
     free(ps);
     free(fe);
     return (EXIT_SUCCESS);
