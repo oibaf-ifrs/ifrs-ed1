@@ -29,9 +29,13 @@ int cheiaListaSeq(tListaSeq *f) {
 
 int inserirListaSeq(tListaSeq *f, int pos, void *valor) {
     if (cheiaListaSeq(f)!=LISTASEQ_CHEIA) {
-        if (vaziaListaSeq(f)==LISTASEQ_VAZIA)
+        if (vaziaListaSeq(f)==LISTASEQ_VAZIA) {
             f->inicio = 0;
+            pos=1;
+        }
         else {
+            if(pos<f->inicio || pos>f->tamanho)
+                pos=f->tamanho+1;
             int count;
             for(count=f->tamanho;count>pos-1;count--) {
                 memcpy((f->conteudo+((count)*f->bytes)),(f->conteudo+((count-1)*f->bytes)),f->bytes);
@@ -75,7 +79,7 @@ int elementoListaSeq(tListaSeq *f, int pos, void *valor) {
         memcpy(valor,f->conteudo+((pos-1)*f->bytes),f->bytes);
         return LISTASEQ_OPERACAO_OK;
     }
-        return LISTASEQ_OPERACAO_ERR;
+    return LISTASEQ_OPERACAO_ERR;
 }
 
 int tamanhoListaSeq(tListaSeq * f) {

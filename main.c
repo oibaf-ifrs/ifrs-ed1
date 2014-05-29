@@ -34,33 +34,61 @@ Passo C: multiplicando teremos: 1*17*13*9*5*1=9945
  * 
  */
 int main(int argc, char** argv) {
-    float cpfArray[] = {0,0,7,6,3,4,5,5,0,5,9}, aux;
+    float aux;
+    unsigned char count,key=65;
     tListaSeq *ls = malloc(sizeof(tListaSeq));
     inicializaListaSeq(ls,sizeof(float));
     //Item A
-    int count=0;
-    for (count=0;count<11; count++) {
-        printf("%f\n",cpfArray[count]);
-        inserirListaSeq(ls,count+1,cpfArray+count);
-    }
-    //Fim item A
-    printf("\nFim item A\n");
-    aux=12;
-    inserirListaSeq(ls,4,&aux);
-    for (count=0;count<tamanhoListaSeq(ls); count++) {
-        if(elementoListaSeq(ls,count+1,&aux)==LISTASEQ_OPERACAO_OK)
-            printf("%f\n",aux);
-    }
-    printf("\nFim item B\n");
-    removerListaSeq(ls,4,&aux);
-    removerListaSeq(ls,11,&aux);
-    removerListaSeq(ls,1,&aux);
-    for (count=0;count<tamanhoListaSeq(ls); count++) {
-        if(elementoListaSeq(ls,count+1,&aux)==LISTASEQ_OPERACAO_OK)
-            printf("%f\n",aux);
-    }
-    printf("\nFim item C\n");
-    //Limpezas
+    while (key!=99) {
+        printf("EDITOR DE LISTAS\n");
+        printf("1 – EXIBIR LISTA\n");
+        printf("2 – INSERIR\n");
+        printf("3 – REMOVER\n");
+        printf("4 – EXIBIR ELEMENTO\n");
+        printf("5 – EXIBIR POSIÇÃO\n");
+        printf("6 – ESVAZIAR\n");
+        printf("99 – SAIR\n");
+        scanf("%hhu",&key);
+        switch(key) {
+            case 1:
+                for (count=0;count<tamanhoListaSeq(ls); count++) {
+                    if(elementoListaSeq(ls,count+1,&aux)==LISTASEQ_OPERACAO_OK)
+                        printf("=> Lista[%d] = %f\n",count+1,aux);
+                }
+                break;
+            case 2:
+                printf("Informe o indice e o valor:\n");
+                scanf("%hhu",&count);
+                scanf("%f",&aux);
+                inserirListaSeq(ls,count,&aux);
+                break;
+            case 3:
+                printf("Informe o indice:\n");
+                scanf("%hhu",&count);
+                if(removerListaSeq(ls,count,&aux) == LISTASEQ_OPERACAO_ERR)
+                    printf("** [ERRO] **\n");
+                break;
+            case 4:
+                printf("Informe o indice:\n");
+                scanf("%hhu",&count);
+                if (elementoListaSeq(ls,count,&aux) != LISTASEQ_OPERACAO_ERR)
+                    printf("Valor: %f\n",aux);
+                else
+                    printf("** [ERRO] **\n");
+                break;
+            case 5:
+                printf("Informe o valor:\n");
+                scanf("%f",&aux);
+                count=posicaoListaSeq(ls,&aux);
+                printf("Posicao: %hhu\n",count);
+                break;
+            case 6:
+                for (count=0;count<tamanhoListaSeq(ls); count++) {
+                    removerListaSeq(ls,1,&aux);
+                }
+                break;
+        }
+    } ;
     finalizaListaSeq(ls);
     free(ls);
     return (EXIT_SUCCESS);
