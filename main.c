@@ -11,6 +11,7 @@
 #include "filaSeq.h"
 #include "pilhaEnc.h"
 #include "pilhaSeq.h"
+#include "listaSeq.h"
 
 /*
  * 
@@ -33,41 +34,35 @@ Passo C: multiplicando teremos: 1*17*13*9*5*1=9945
  * 
  */
 int main(int argc, char** argv) {
-    float cpfArray[] = {0,0,7,6,3,4,5,5,0,5,9}, soma1, soma2, soma, multiplicacao;
-    tPilhaEnc *ps = malloc(sizeof(tPilhaEnc));
-    inicializaPilhaEnc(ps,sizeof(float));
-    tFilaEnc *fe = malloc(sizeof(tFilaEnc));
-    inicializaFilaEnc(fe,sizeof(float));
+    float cpfArray[] = {0,0,7,6,3,4,5,5,0,5,9}, aux;
+    tListaSeq *ls = malloc(sizeof(tListaSeq));
+    inicializaListaSeq(ls,sizeof(float));
     //Item A
     int count=0;
     for (count=0;count<11; count++) {
         printf("%f\n",cpfArray[count]);
-        pushPilhaEnc(ps,cpfArray+count);
+        inserirListaSeq(ls,count+1,cpfArray+count);
     }
     //Fim item A
-    printf("\n\n\n");
-    //Item B
-    while (popPilhaEnc(ps,&soma1)!=PILHAENC_VAZIA) {
-        soma=soma1;
-        if(popPilhaEnc(ps,&soma2)!=PILHAENC_VAZIA);
-            soma+=soma2;
-        printf("Soma: %f\n",soma);
-        inserirFilaEnc(fe,&soma);
+    printf("\nFim item A\n");
+    aux=12;
+    inserirListaSeq(ls,4,&aux);
+    for (count=0;count<tamanhoListaSeq(ls); count++) {
+        if(elementoListaSeq(ls,count+1,&aux)==LISTASEQ_OPERACAO_OK)
+            printf("%f\n",aux);
     }
-    //Fim item B
-    printf("\n\n\n");
-    //Item C
-    float aux=0;
-    multiplicacao=1;
-    while(removerFilaEnc(fe,&aux)==FILAENC_OPERACAO_OK) {
-        multiplicacao*=aux;
+    printf("\nFim item B\n");
+    removerListaSeq(ls,4,&aux);
+    removerListaSeq(ls,11,&aux);
+    removerListaSeq(ls,1,&aux);
+    for (count=0;count<tamanhoListaSeq(ls); count++) {
+        if(elementoListaSeq(ls,count+1,&aux)==LISTASEQ_OPERACAO_OK)
+            printf("%f\n",aux);
     }
-    printf("Multiplicacao: %f\n",multiplicacao);
-    //Fim item C
+    printf("\nFim item C\n");
     //Limpezas
-    finalizaPilhaEnc(ps);
-    free(ps);
-    free(fe);
+    finalizaListaSeq(ls);
+    free(ls);
     return (EXIT_SUCCESS);
 }
 

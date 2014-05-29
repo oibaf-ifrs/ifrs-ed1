@@ -6,6 +6,7 @@
                    projectFiles="true">
       <itemPath>filaEnc.h</itemPath>
       <itemPath>filaSeq.h</itemPath>
+      <itemPath>listaSeq.h</itemPath>
       <itemPath>pilhaEnc.h</itemPath>
       <itemPath>pilhaSeq.h</itemPath>
     </logicalFolder>
@@ -14,6 +15,7 @@
                    projectFiles="true">
       <itemPath>filaEnc.c</itemPath>
       <itemPath>filaSeq.c</itemPath>
+      <itemPath>listaSeq.c</itemPath>
       <itemPath>main.c</itemPath>
       <itemPath>pilhaEnc.c</itemPath>
       <itemPath>pilhaSeq.c</itemPath>
@@ -51,6 +53,10 @@
       <item path="filaSeq.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="filaSeq.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="listaSeq.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="listaSeq.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -90,6 +96,10 @@
       <item path="filaSeq.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="filaSeq.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="listaSeq.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="listaSeq.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.c" ex="false" tool="0" flavor2="0">
       </item>
