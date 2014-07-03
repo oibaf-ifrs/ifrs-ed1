@@ -14,6 +14,7 @@ typedef struct{
     void *content;
     void *left;
     void *right;
+    void *father;
 }tBTreeNode;
 
 typedef struct{
@@ -38,3 +39,21 @@ int removerBTreeSemValor(tBTree *f);
 tFilaIEnctem* primeiroBTree(tBTree *f);
 
 int tamanhoBTree(tBTree * f);
+
+int infoBTree(tBTreeNode* p, void *content); //retorna o conteúdo do nó
+
+tBTreeNode* leftBTree(tBTreeNode* p); //retorna ponteiro para o nó filho da esq.
+
+tBTreeNode* rightBTree(tBTreeNode* p); //retorna ponteiro para nó filho da direita
+
+tBTreeNode* fatherBTree(tBTreeNode* p); //retorna ponteiro para o pai
+
+tBTreeNode* brotherBTree(tBTreeNode* p); //retorna ponteiro para o nó irmão
+
+int isLeftBTree(tBTreeNode* p); //retorna true se p é um filho esquerdo
+
+int isRightBTree(tBTreeNode* p); //retorna true se p é um filho direito
+
+int setLeftBTree(tBTreeNode* p, void *content); //define x um filho esq para p, com conteúdo x;
+
+int setRightBTree(tBTreeNode* p, void *content); //define x um filho dir para p, com conteúdo x;
