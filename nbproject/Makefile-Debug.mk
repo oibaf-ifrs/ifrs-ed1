@@ -35,8 +35,10 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/bTree.o \
 	${OBJECTDIR}/filaEnc.o \
 	${OBJECTDIR}/filaSeq.o \
+	${OBJECTDIR}/listaEnc.o \
 	${OBJECTDIR}/listaSeq.o \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/pilhaEnc.o \
@@ -67,6 +69,11 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/20140424-provaed1: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.c} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/20140424-provaed1 ${OBJECTFILES} ${LDLIBSOPTIONS}
 
+${OBJECTDIR}/bTree.o: bTree.c 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/bTree.o bTree.c
+
 ${OBJECTDIR}/filaEnc.o: filaEnc.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
@@ -76,6 +83,11 @@ ${OBJECTDIR}/filaSeq.o: filaSeq.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/filaSeq.o filaSeq.c
+
+${OBJECTDIR}/listaEnc.o: listaEnc.c 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/listaEnc.o listaEnc.c
 
 ${OBJECTDIR}/listaSeq.o: listaSeq.c 
 	${MKDIR} -p ${OBJECTDIR}
