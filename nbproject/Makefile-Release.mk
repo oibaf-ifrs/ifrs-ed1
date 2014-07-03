@@ -35,6 +35,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/auxFunc.o \
 	${OBJECTDIR}/bTree.o \
 	${OBJECTDIR}/filaEnc.o \
 	${OBJECTDIR}/filaSeq.o \
@@ -68,6 +69,11 @@ LDLIBSOPTIONS=
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/20140424-provaed1: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.c} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/20140424-provaed1 ${OBJECTFILES} ${LDLIBSOPTIONS}
+
+${OBJECTDIR}/auxFunc.o: auxFunc.c 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/auxFunc.o auxFunc.c
 
 ${OBJECTDIR}/bTree.o: bTree.c 
 	${MKDIR} -p ${OBJECTDIR}
