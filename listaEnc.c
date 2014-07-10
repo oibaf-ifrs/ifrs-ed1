@@ -136,5 +136,5 @@ int tamanhoListaEnc(tListaEnc * f){
     tListaEncItem *go;
     for(go=f->head;go!=NULL;go=go->next)
         retorno++;
-    return retorno-1;
+    return retorno;
 }

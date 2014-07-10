@@ -69,7 +69,7 @@ int main(int argc, char** argv) {
 //FUNÇÕES AUXILIARES
 
 int menuFE(tFilaEnc *fe) {
-    int ler;
+    int ler,aux;
     do {
         printf("== MENU FILA\n");
         printf("-->  1) Incluir\n");
@@ -90,7 +90,6 @@ int menuFE(tFilaEnc *fe) {
                 break;
             case 3:
                 printf("::: ITENS: %d\n",ler);
-                printf("\n");
                 break;
             case 4:
                 ler=tamanhoFilaEnc(fe);
@@ -100,11 +99,13 @@ int menuFE(tFilaEnc *fe) {
                 finalizaFilaEnc(fe);
                 break;
         }
+        printf("\n");
     }while(ler!=99);
 }
 
 int menuPE(tPilhaEnc *pe) {
-    int ler;
+    int ler,aux;
+    tPilhaEncItem *pei;
     do {
         printf("== MENU PILHA\n");
         printf("-->  1) Incluir\n");
@@ -121,10 +122,17 @@ int menuPE(tPilhaEnc *pe) {
                 pushPilhaEnc(pe,&ler);
                 break;
             case 2:
+                if(popPilhaEnc(pe,&aux)==PILHAENC_OPERACAO_OK)
+                    printf("-->  2) Excluir / Excluído o valor %d",aux);
+                else
+                    printf("**ERRO** pilha vazia");
                 break;
             case 3:
-                printf("::: ITENS: %d\n",ler);
-                printf("\n");
+                printf("::: ITENS: ");
+                for(pei=pe->tail;pei!=NULL;pei=pei->previous) {
+                    aux=*((int *)(pei->content));
+                    printf("%d,",aux);
+                }
                 break;
             case 4:
                 ler=tamanhoPilhaEnc(pe);
@@ -134,11 +142,13 @@ int menuPE(tPilhaEnc *pe) {
                 finalizaPilhaEnc(pe);
                 break;
         }
+        printf("\n");
     }while(ler!=99);
 }
 
 int menuLE(tListaEnc *le) {
-    int ler,ler2;
+    int ler,aux,ler2;
+    tListaEncItem *tmp;
     do {
         printf("== MENU LISTA\n");
         printf("-->  1) Incluir\n");
@@ -154,31 +164,46 @@ int menuLE(tListaEnc *le) {
                 printf("-->  1) Incluir / Informe o valor:\n");
                 scanf("%d",&ler);
                 printf("-->  1) Incluir / Informe a posicao:\n");
-                scanf("%d",&ler2);
-                inserirListaEnc(le,ler2,&ler);
+                scanf("%d",&aux);
+                inserirListaEnc(le,aux,&ler);
                 break;
             case 2:
+                printf("-->  2) Excluir / Informe a posição:\n");
+                scanf("%d",&ler2);
+                if(removerListaEnc(le,ler2,&aux)==LISTAENC_OPERACAO_OK)
+                    printf("-->  2) Excluir / Excluído o valor %d",aux);
+                else
+                    printf("**ERRO** Lista vazia");
                 break;
             case 3:
+                printf("-->  3) Ler posição / Informe a posição:\n");
+                scanf("%d",&ler2);
+                if(elementoListaEnc(le,ler2,&aux)==LISTAENC_OPERACAO_OK)
+                    printf("-->  3) Ler posição / O valor é %d",aux);
+                else
+                    printf("**ERRO** Lista vazia");
                 break;
             case 4:
-                printf("::: ITENS: %d\n",ler);
-                printf("\n");
+                printf("::: ITENS: ");
+                for(tmp=le->head;tmp!=NULL;tmp=tmp->next) {
+                    aux=*((int *)(tmp->content));
+                    printf("%d,",aux);
+                }
                 break;
             case 5:
                 ler=tamanhoListaEnc(le);
-                printf("Tamanho: %d\n",ler);
+                printf("Tamanho: %d",ler);
                 break;
             case 6:
                 finalizaListaEnc(le);
                 break;
-                
         }
+        printf("\n");
     }while(ler!=99);
 }
 
 int menuBT(tBTree *bt) {
-    int ler;
+    int ler,aux;
     tBTreeNode *tmp;
     do {
         printf("== MENU BTREE\n");
@@ -192,7 +217,8 @@ int menuBT(tBTree *bt) {
             case 1:
                 printf("-->  1) Incluir / Informe o valor:\n");
                 scanf("%d",&ler);
-                inserirBTree(bt,&ler);
+                if(inserirBTree(bt,&ler)==BTREE_OPERACAO_ERR)
+                    printf("**ERRO** valor já existe!");
                 break;
             case 2:
                 printf("-->  2) Excluir / Informe o valor:\n");
@@ -203,11 +229,11 @@ int menuBT(tBTree *bt) {
             case 3:
                 printf("::: ITENS: ");
                 sortedIntWalkBTree(bt->root,0);
-                printf("\n");
                 break;
             case 4:
                 finalizaBTree(bt);
                 break;
         }
+        printf("\n");
     }while(ler!=99);
 }
