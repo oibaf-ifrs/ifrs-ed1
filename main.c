@@ -207,8 +207,8 @@ int menuPE(tPilhaEnc *pe) {
                     printf("**ERRO** pilha vazia");
                 break;
             case 3:
-                printf("::: ITENS: ");
-                for(pei=pe->tail;pei!=NULL;pei=pei->previous) {
+                printf("::: TOPO: ");
+                for(pei=pe->tail;pei!=NULL;pei=NULL) {
                     aux=*((int *)(pei->content));
                     printf("%d,",aux);
                 }
