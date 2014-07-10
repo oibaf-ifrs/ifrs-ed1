@@ -73,7 +73,7 @@ int tamanhoPilhaEnc(tPilhaEnc * f){
         return 0;
     unsigned int retorno=0;
     tPilhaEncItem *go;
-    for(go=f->head;go!=NULL;go=go->next)
+    for(go=f->tail;go!=NULL;go=go->previous)
         retorno++;
     return retorno;
 }

@@ -136,7 +136,7 @@ int menuPE(tPilhaEnc *pe) {
                 break;
             case 4:
                 ler=tamanhoPilhaEnc(pe);
-                printf("Tamanho: %d\n",ler);
+                printf("Tamanho: %d",ler);
                 break;
             case 5:
                 finalizaPilhaEnc(pe);
