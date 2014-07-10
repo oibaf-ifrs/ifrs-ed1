@@ -20,9 +20,10 @@ typedef struct{
 typedef struct{
     tBTreeNode *root;
     int bytes;
+    int negative;
 }tBTree;
 
-int inicializaBTree(tBTree *f, int bytes);
+int inicializaBTree(tBTree *f, int bytes, int negative);
 
 int finalizaBTree(tBTree *f);
 
@@ -58,4 +59,4 @@ int setLeftBTree(tBTreeNode* p, void *content, int bytes); //define x um filho e
 
 int setRightBTree(tBTreeNode* p, void *content, int bytes); //define x um filho dir para p, com conteúdo x;
 
-int sortedIntWalkBTree(tBTreeNode* p, int level);
+int sortedIntWalkBTree(tBTreeNode* p, int level, char* format);

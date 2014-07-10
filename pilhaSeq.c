@@ -16,6 +16,7 @@ int inicializaPilhaSeq(tPilhaSeq *pilha, int bytes){
 
 int finalizaPilhaSeq(tPilhaSeq *pilha) {
     free(pilha->conteudo);
+    pilha->topo = -1;
     return PILHASEQ_OPERACAO_OK;
 }
 
@@ -30,12 +31,11 @@ int  cheiaPilhaSeq (tPilhaSeq *pilha){
     if ((pilha->topo)==(PILHASEQ_TAMANHO-1))
         return PILHASEQ_CHEIA;
     return PILHASEQ_OPERACAO_OK;
-    //corrigir para retornar pilhaseq_cheia
 }
 
 int pushPilhaSeq(tPilhaSeq *pilha, void *valor){
     if(cheiaPilhaSeq(pilha)==PILHASEQ_CHEIA){
-        return PILHASEQ_CHEIA;
+        return PILHASEQ_OPERACAO_ERR;
     } else{
         (pilha->topo)++;
         memcpy((pilha->conteudo+(pilha->topo*pilha->bytes)),valor,pilha->bytes);
@@ -55,7 +55,7 @@ int popPilhaSeq (tPilhaSeq *pilha, void *valor){
 
 int primeiroPilhaSeq (tPilhaSeq *pilha, void *valor){
     if(vaziaPilhaSeq(pilha)!=PILHASEQ_VAZIA){
-        memcpy(valor,pilha->conteudo[pilha->topo],pilha->bytes);
+        memcpy(valor,(pilha->conteudo+(pilha->topo*pilha->bytes)),pilha->bytes);
         return PILHASEQ_OPERACAO_OK;
     } else{
         return PILHASEQ_OPERACAO_ERR;

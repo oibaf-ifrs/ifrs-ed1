@@ -10,10 +10,11 @@
 #include "auxFunc.h"
 #include "bTree.h"
 
-int inicializaBTree(tBTree *f, int bytes) {
+int inicializaBTree(tBTree *f, int bytes, int negative) {
     if(f!=NULL) {
         f->root=NULL;
         f->bytes=bytes;
+        f->negative = negative;
         return BTREE_OPERACAO_OK;
     }
     return BTREE_OPERACAO_ERR;
@@ -34,7 +35,6 @@ int cheiaBTree(tBTree *f) {
 }
 
 int inserirBTree(tBTree *f, void *valor) {
-    //TODO: testar
     tBTreeNode* aux = malloc(sizeof(tBTreeNode));
     aux->content = malloc(f->bytes);
     aux->father=aux->left=aux->right=NULL;
@@ -44,10 +44,14 @@ int inserirBTree(tBTree *f, void *valor) {
         return BTREE_OPERACAO_OK;
     }
     else {
-        char multiplier = isLittleEndian()?1:-1;
+        char multiplier = isLittleEndian()?1:-1, *aux1, *aux2;
         int comparison;
         tBTreeNode **walk = &(f->root), *father;
         do {
+            aux1=(*walk)->content;
+            aux2=valor;
+            if((f->negative)&&((*aux1>>(f->bytes-1))!=(*aux2>>(f->bytes-1))))
+                multiplier*=-1;
             comparison=memcmp((*walk)->content,valor,f->bytes)*multiplier;
             father=*walk;
             if(comparison<0) {
@@ -216,16 +220,17 @@ int setRightBTree(tBTreeNode* p, void *content, int bytes) {
     return BTREE_OPERACAO_ERR;
 }
 
-int sortedIntWalkBTree(tBTreeNode* p, int level) {
+int sortedIntWalkBTree(tBTreeNode* p, int level,char *format) {
     if(p!=NULL) {
-        int *content=p->content, count;
-        sortedIntWalkBTree(p->left,level+1);
+        char *content=p->content;
+        int count;
+        sortedIntWalkBTree(p->left,level+1,format);
         /*
         for(count=0;count<level;count++)
             printf(".");
         */
-        printf("%d,",(*content));
-        sortedIntWalkBTree(p->right,level+1);
+        printf(format,*content);
+        sortedIntWalkBTree(p->right,level+1,format);
         return BTREE_OPERACAO_OK;
     }
     return BTREE_OPERACAO_ERR;

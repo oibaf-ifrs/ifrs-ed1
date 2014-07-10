@@ -17,6 +17,8 @@ void inicializaFilaSeq(tFilaSeq *f, int bytes) {
 
 int finalizaFilaSeq(tFilaSeq *f) {
     free(f->conteudo);
+    f->fim = -1;
+    f->inicio = -1;
     return FILASEQ_OPERACAO_OK;
 }
 
@@ -75,4 +77,5 @@ int tamanhoFilaSeq(tFilaSeq * f){
         cont++;
         aux=(aux+1)%FILASEQ_TAMANHO;
     }
+    return cont+1;
 }

@@ -10,6 +10,7 @@
 
 void inicializaListaSeq(tListaSeq *f, int bytes) {
     f->inicio = -1;
+    f->tamanho = 0;
     f->bytes= bytes;
     f->conteudo = malloc(sizeof(char)*LISTASEQ_TAMANHO*f->bytes);
 }
@@ -49,14 +50,15 @@ int inserirListaSeq(tListaSeq *f, int pos, void *valor) {
 
 int removerListaSeq(tListaSeq *f, int pos, void *valor) {
     if (vaziaListaSeq(f)!=LISTASEQ_VAZIA && pos>f->inicio && pos<=f->tamanho) {
-        memcpy(valor,(f->conteudo+(pos-1*f->bytes)),f->bytes);
+        memcpy(valor,(f->conteudo+((pos-1)*f->bytes)),f->bytes);
         f->tamanho--;
         int count;
         for(count=pos-1;count<f->tamanho;count++) {
             memcpy((f->conteudo+(count*f->bytes)),(f->conteudo+((count+1)*f->bytes)),f->bytes);
         }
         if (vaziaListaSeq(f)==LISTASEQ_VAZIA) {
-            inicializaFilaSeq(f,f->bytes);
+            f->inicio = -1;
+            f->tamanho = 0;
         }
         return LISTASEQ_OPERACAO_OK;
     } else {
