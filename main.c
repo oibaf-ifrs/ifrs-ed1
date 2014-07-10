@@ -70,6 +70,7 @@ int main(int argc, char** argv) {
 
 int menuFE(tFilaEnc *fe) {
     int ler,aux;
+    tFilaIEnctem *fei;
     do {
         printf("== MENU FILA\n");
         printf("-->  1) Incluir\n");
@@ -86,14 +87,21 @@ int menuFE(tFilaEnc *fe) {
                 inserirFilaEnc(fe,&ler);
                 break;
             case 2:
-                removerFilaEncSemValor(fe);
+                if(removerFilaEnc(fe,&aux)==FILAENC_OPERACAO_OK)
+                    printf("-->  2) Excluir / Excluído o valor %d",aux);
+                else
+                    printf("**ERRO** fila vazia");
                 break;
             case 3:
-                printf("::: ITENS: %d\n",ler);
+                printf("::: ITENS: ");
+                for(fei=fe->head;fei!=NULL;fei=fei->next) {
+                    aux=*((int *)(fei->content));
+                    printf("%d,",aux);
+                }
                 break;
             case 4:
                 ler=tamanhoFilaEnc(fe);
-                printf("Tamanho: %d\n",ler);
+                printf("Tamanho: %d",ler);
                 break;
             case 5:
                 finalizaFilaEnc(fe);
