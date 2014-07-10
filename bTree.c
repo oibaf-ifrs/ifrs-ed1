@@ -224,7 +224,7 @@ int sortedIntWalkBTree(tBTreeNode* p, int level) {
         for(count=0;count<level;count++)
             printf(".");
         */
-        printf("%d",(*content));
+        printf("%d,",(*content));
         sortedIntWalkBTree(p->right,level+1);
         return BTREE_OPERACAO_OK;
     }
