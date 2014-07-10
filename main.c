@@ -13,26 +13,22 @@
 #include "pilhaSeq.h"
 #include "listaSeq.h"
 #include "bTree.h"
+#include "listaEnc.h"
 
 int main(int argc, char** argv) {
-    tBTree *ls = malloc(sizeof(tBTree));
-    tBTreeNode *temp;
-    int tempint=5;
-    inicializaBTree(ls,sizeof(int));
-    int count;
-    for(count=5;count<10;count++)
-        inserirBTree(ls,&count);
-    for(count=0;count<5;count++)
-        inserirBTree(ls,&count);
-    printf("walk1:");
-    sortedIntWalkBTree(ls->root,0);
-    findBtree(ls,&tempint,&temp);
-    removerBTree(ls,temp);
-    printf("\nwalk2:");
-    sortedIntWalkBTree(ls->root,0);
-    finalizaBTree(ls);
-    printf("\nwalk3:");
-    sortedIntWalkBTree(ls->root,0);
+    tListaEnc *ls = malloc(sizeof(tListaEnc));
+    int count,aux=5;
+    inicializaListaEnc(ls,sizeof(int));
+    for(count=1;count<11;count++)
+        inserirListaEnc(ls,count,&count);
+    posicaoListaEnc(ls,&aux);
+    printf("%d\n\n",aux);
+    removerListaEnc(ls,8,&aux);
+    for(count=1;count<11;count++) {
+        if(elementoListaEnc(ls,count,&aux)!=LISTAENC_OPERACAO_ERR)
+            printf("%d\n",aux);
+    }
+    finalizaListaEnc(ls);
     free(ls);
     return (EXIT_SUCCESS);
 }

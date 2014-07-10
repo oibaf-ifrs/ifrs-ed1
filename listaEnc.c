@@ -45,12 +45,12 @@ int inserirListaEnc(tListaEnc *f, int pos, void *valor) {
         newVal->content = malloc(f->bytes);
         memcpy(newVal->content, valor, f->bytes);
         newVal->next=newVal->previous=NULL;
-        if(vaziaListaEnc(f))
+        if(vaziaListaEnc(f)==LISTAENC_VAZIA)
             f->head=f->tail=newVal;
         else {
             int count;
             tListaEncItem *aux=f->head,*tmp;
-            for (count=0;count<pos||aux==NULL;count++)
+            for (count=1;count<=pos&&aux->next!=NULL;count++)
                 aux=aux->next;
             tmp=aux->next;
             aux->next=newVal;
@@ -71,26 +71,70 @@ int inserirListaEnc(tListaEnc *f, int pos, void *valor) {
 int removerListaEnc(tListaEnc *f, int pos, void *content) {
     if (vaziaListaEnc(f)==LISTAENC_VAZIA)
         return LISTAENC_VAZIA;
-    else
-        memcpy(content,f->head->content, f->bytes);
-    //return removerListaEncSemValor(f);
-    return 1;
+    else {
+        int count;
+        tListaEncItem *aux=f->head,*tmp;
+        for (count=1;count<pos&&aux->next!=NULL;count++)
+            aux=aux->next;
+        if(aux==NULL)
+            return LISTAENC_OPERACAO_ERR;
+        memcpy(content,aux->content, f->bytes);
+        if(f->head==aux)
+            f->head=aux->next;
+        if(f->tail==aux)
+            f->tail=aux->previous;
+        if(aux->next!=NULL)
+            ((tListaEncItem *)aux->next)->previous=aux->previous;
+        if(aux->previous!=NULL)
+            ((tListaEncItem *)aux->previous)->next=aux->next;
+        free(aux->content);
+        free(aux);
+        return LISTAENC_OPERACAO_OK;
+    }
+    return LISTAENC_OPERACAO_ERR;
 }
 
 int posicaoListaEnc(tListaEnc *f, void *valor) {
-    //TODO: implementar
+    if (vaziaListaEnc(f)==LISTAENC_VAZIA)
+        return LISTAENC_VAZIA;
+    else {
+        int count=0,tamanho=tamanhoListaEnc(f), diff=1;
+        tListaEncItem *aux=f->head;
+        while(count<tamanho && diff && aux!=NULL) {
+            diff=memcmp(valor,aux->content,f->bytes);
+            aux=aux->next;
+            count++;
+        }
+        if(aux==NULL)
+            return LISTAENC_OPERACAO_ERR;
+        memcpy(valor,&count, f->bytes);
+        return LISTAENC_OPERACAO_OK;
+    }
+    return LISTAENC_OPERACAO_ERR;
 }
 
 int elementoListaEnc(tListaEnc *f, int pos, void *valor) {
-    //TODO: implementar
+    if (vaziaListaEnc(f)==LISTAENC_VAZIA)
+        return LISTAENC_VAZIA;
+    else {
+        tListaEncItem *aux=f->head;
+        int count;
+        for (count=1;count<pos&&aux!=NULL;count++)
+            aux=aux->next;
+        if(aux==NULL)
+            return LISTAENC_OPERACAO_ERR;
+        memcpy(valor,aux->content, f->bytes);
+        return LISTAENC_OPERACAO_OK;
+    }
+    return LISTAENC_OPERACAO_ERR;
 }
 
 int tamanhoListaEnc(tListaEnc * f){
-    if(vaziaListaEnc(f))
+    if(vaziaListaEnc(f)==LISTAENC_VAZIA)
         return 0;
     unsigned int retorno=0;
     tListaEncItem *go;
     for(go=f->head;go!=NULL;go=go->next)
         retorno++;
-    return retorno;
+    return retorno-1;
 }
