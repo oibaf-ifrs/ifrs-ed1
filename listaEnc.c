@@ -1,7 +1,7 @@
 /* 
  * File:   ListaEnc.c
  * Author: Fábio Tramasoli (0619132)
- * About: Fila Encadeada agnóstica a tipos.
+ * About: Lista Encadeada agnóstica a tipos.
  * 
  */
 
@@ -21,7 +21,7 @@ int inicializaListaEnc(tListaEnc *f, int bytes) {
 
 int finalizaListaEnc(tListaEnc *f) {
     char *aux = malloc(f->bytes);
-    while(removerListaEnc(f,aux)==LISTAENC_OPERACAO_OK) {
+    while(removerListaEnc(f,1,aux)==LISTAENC_OPERACAO_OK) {
     }
     free(aux);
     return LISTAENC_OPERACAO_OK;
@@ -40,24 +40,41 @@ int cheiaListaEnc(tListaEnc *f) {
 
 int inserirListaEnc(tListaEnc *f, int pos, void *valor) {
     //TODO: implementar
-    tFilaIEnctem *newVal = malloc(sizeof(tFilaIEnctem));
-    newVal->content = malloc(f->bytes);
-    memcpy(newVal->content, valor, f->bytes);
-    newVal->next=NULL;
-    if(vaziaListaEnc(f))
-        f->head=f->tail=newVal;
-    else 
-        f->tail->next=f->tail=newVal;
-    return LISTAENC_OPERACAO_OK;
+    if(f!=NULL && pos>0) {
+        tListaEncItem *newVal = malloc(sizeof(tListaEncItem));
+        newVal->content = malloc(f->bytes);
+        memcpy(newVal->content, valor, f->bytes);
+        newVal->next=newVal->previous=NULL;
+        if(vaziaListaEnc(f))
+            f->head=f->tail=newVal;
+        else {
+            int count;
+            tListaEncItem *aux=f->head,*tmp;
+            for (count=0;count<pos||aux==NULL;count++)
+                aux=aux->next;
+            tmp=aux->next;
+            aux->next=newVal;
+            if(count==tamanhoListaEnc(f))
+                f->tail=newVal;
+            else
+                newVal->next=tmp;
+            if(count==0)
+                f->head=newVal;
+            else
+                newVal->previous=aux;
+        }
+        return LISTAENC_OPERACAO_OK;
+    }
+    return LISTAENC_OPERACAO_ERR;
 }
 
 int removerListaEnc(tListaEnc *f, int pos, void *content) {
-    //TODO: implementar
     if (vaziaListaEnc(f)==LISTAENC_VAZIA)
         return LISTAENC_VAZIA;
     else
         memcpy(content,f->head->content, f->bytes);
-    return removerListaEncSemValor(f);
+    //return removerListaEncSemValor(f);
+    return 1;
 }
 
 int posicaoListaEnc(tListaEnc *f, void *valor) {
@@ -72,7 +89,7 @@ int tamanhoListaEnc(tListaEnc * f){
     if(vaziaListaEnc(f))
         return 0;
     unsigned int retorno=0;
-    tFilaIEnctem *go;
+    tListaEncItem *go;
     for(go=f->head;go!=NULL;go=go->next)
         retorno++;
     return retorno;

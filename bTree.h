@@ -32,28 +32,30 @@ int cheiaBTree(tBTree *f);
 
 int inserirBTree(tBTree *f, void *valor);
 
-int removerBTree(tBTree *f, void *content);
+int removerBTree(tBTree *f, tBTreeNode *toRemove);
 
 int removerBTreeSemValor(tBTree *f);
 
-tFilaIEnctem* primeiroBTree(tBTree *f);
+int infoBTree(tBTreeNode* p, void *content, int bytes); //retorna o conteúdo do nó
 
-int tamanhoBTree(tBTree * f);
+int findBtree(tBTree *f, void *valor, tBTreeNode** node); //retorna o ponteiro que contem o conteúdo
 
-int infoBTree(tBTreeNode* p, void *content); //retorna o conteúdo do nó
+int leftBTree(tBTreeNode* p, tBTreeNode* node); //retorna ponteiro para o nó filho da esq.
 
-tBTreeNode* leftBTree(tBTreeNode* p); //retorna ponteiro para o nó filho da esq.
+int rightBTree(tBTreeNode* p, tBTreeNode* node); //retorna ponteiro para nó filho da direita
 
-tBTreeNode* rightBTree(tBTreeNode* p); //retorna ponteiro para nó filho da direita
+int fatherBTree(tBTreeNode* p, tBTreeNode* node); //retorna ponteiro para o pai
 
-tBTreeNode* fatherBTree(tBTreeNode* p); //retorna ponteiro para o pai
+int brotherBTree(tBTreeNode* p, tBTreeNode* node); //retorna ponteiro para o nó irmão
 
-tBTreeNode* brotherBTree(tBTreeNode* p); //retorna ponteiro para o nó irmão
+int biggerBTree(tBTreeNode* p, tBTreeNode** node); //retorna ponteiro para maior na subarvore
 
 int isLeftBTree(tBTreeNode* p); //retorna true se p é um filho esquerdo
 
 int isRightBTree(tBTreeNode* p); //retorna true se p é um filho direito
 
-int setLeftBTree(tBTreeNode* p, void *content); //define x um filho esq para p, com conteúdo x;
+int setLeftBTree(tBTreeNode* p, void *content, int bytes); //define x um filho esq para p, com conteúdo x;
 
-int setRightBTree(tBTreeNode* p, void *content); //define x um filho dir para p, com conteúdo x;
+int setRightBTree(tBTreeNode* p, void *content, int bytes); //define x um filho dir para p, com conteúdo x;
+
+int sortedIntWalkBTree(tBTreeNode* p, int level);

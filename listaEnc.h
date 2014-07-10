@@ -14,11 +14,11 @@ typedef struct{
     void *content;
     void *next;
     void *previous;
-}tFilaIEnctem;
+}tListaEncItem;
 
 typedef struct{
-    tFilaIEnctem *head;
-    tFilaIEnctem *tail;
+    tListaEncItem *head;
+    tListaEncItem *tail;
     int size;
     int bytes;
 }tListaEnc;
