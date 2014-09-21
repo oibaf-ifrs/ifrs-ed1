@@ -39,13 +39,11 @@ int cheiaListaEnc(tListaEnc *f) {
 }
 
 int inserirListaEnc(tListaEnc *f, int pos, void *valor) {
-    //TODO: implementar
     if(f!=NULL && pos>0) {
         tListaEncItem *newVal = malloc(sizeof(tListaEncItem));
         newVal->content = malloc(f->bytes);
         memcpy(newVal->content, valor, f->bytes);
         newVal->next=newVal->previous=NULL;
-        //nao insere na ordem
         if(vaziaListaEnc(f)==LISTAENC_VAZIA)
             f->head=f->tail=newVal;
         else {
@@ -53,15 +51,20 @@ int inserirListaEnc(tListaEnc *f, int pos, void *valor) {
             tListaEncItem *aux=f->head;
             for (count=1;count<pos&&aux->next!=NULL;count++)
                 aux=aux->next;
-            newVal->previous=aux;
-            newVal->next=aux->next;
-            aux->next=newVal;
-            if(newVal->next!=NULL)
-                ((tListaEncItem*)(newVal->next))->previous=newVal;
-            if(count==tamanhoListaEnc(f)+1)
-                f->tail=newVal;
-            else if(pos==1)
+            if(pos==1) {
+                newVal->next=aux;
+                aux->previous=newVal;
                 f->head=newVal;
+            }
+            else {
+                newVal->previous=aux;
+                newVal->next=aux->next;
+                aux->next=newVal;
+                if(newVal->next!=NULL)
+                    ((tListaEncItem*)(newVal->next))->previous=newVal;
+                if(count==tamanhoListaEnc(f)+1)
+                f->tail=newVal;
+            }   
         }
         return LISTAENC_OPERACAO_OK;
     }
