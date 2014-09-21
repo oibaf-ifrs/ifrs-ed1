@@ -50,7 +50,9 @@ int inserirBTree(tBTree *f, void *valor) {
         do {
             aux1=(*walk)->content;
             aux2=valor;
-            if((f->negative)&&((*aux1>>(f->bytes-1))!=(*aux2>>(f->bytes-1))))
+            int shift=f->bytes-1;
+            if((f->negative)&&((*aux1<<(shift))&0x1<<(shift)==0x1)&&((*aux2<<(shift))&0x1<<(shift)==0x1))
+            //if((f->negative)&&((*aux1<<(f->bytes-1))&(*aux2<<(f->bytes-1))))
                 multiplier*=-1;
             comparison=memcmp((*walk)->content,valor,f->bytes)*multiplier;
             father=*walk;

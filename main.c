@@ -387,7 +387,7 @@ int menuBT(tBTree *bt) {
         printf("== MENU BTREE\n");
         printf("-->  1) Inserir valor\n");
         printf("-->  2) Excluir valor\n");
-        printf("-->  3) Imprimir btree ordenada* (sem bug para negativos!!)\n");
+        printf("-->  3) Imprimir btree ordenada* (com bug para negativos!!)\n");
         printf("-->  4) Limpar\n");
         printf("--> 99) Voltar\n");
         scanf("%d",&ler);

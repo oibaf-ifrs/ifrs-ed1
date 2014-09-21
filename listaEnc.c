@@ -45,23 +45,23 @@ int inserirListaEnc(tListaEnc *f, int pos, void *valor) {
         newVal->content = malloc(f->bytes);
         memcpy(newVal->content, valor, f->bytes);
         newVal->next=newVal->previous=NULL;
+        //nao insere na ordem
         if(vaziaListaEnc(f)==LISTAENC_VAZIA)
             f->head=f->tail=newVal;
         else {
             int count;
-            tListaEncItem *aux=f->head,*tmp;
-            for (count=1;count<=pos&&aux->next!=NULL;count++)
+            tListaEncItem *aux=f->head;
+            for (count=1;count<pos&&aux->next!=NULL;count++)
                 aux=aux->next;
-            tmp=aux->next;
+            newVal->previous=aux;
+            newVal->next=aux->next;
             aux->next=newVal;
-            if(count==tamanhoListaEnc(f))
+            if(newVal->next!=NULL)
+                ((tListaEncItem*)(newVal->next))->previous=newVal;
+            if(count==tamanhoListaEnc(f)+1)
                 f->tail=newVal;
-            else
-                newVal->next=tmp;
-            if(count==0)
+            else if(pos==1)
                 f->head=newVal;
-            else
-                newVal->previous=aux;
         }
         return LISTAENC_OPERACAO_OK;
     }
